@@ -15,6 +15,7 @@ namespace TestProjectAppache
         [SerializeField] private int globalPlatformIndex;
         private ObjectsPool _pool;
 
+        
         public void Init(ObjectsPool pool)
         {
             _pool = pool;
@@ -24,6 +25,8 @@ namespace TestProjectAppache
             }
 
             GenerateFirstPlafrom();
+
+            GameSpring.Instance.PlayerController.Init(currentPath[0]);
         }
 
         private void GenerateFirstPlafrom()
@@ -40,6 +43,24 @@ namespace TestProjectAppache
                 globalPlatformIndex++;
                 createdRailway.gameObject.name = "PlatformType_"+ selectType + "_" + i;
             }
+
+            LinkPathInGlobalPlatform();
+        }
+
+        private void LinkPathInGlobalPlatform()
+        {
+            for (int i = 1; i < currentPath.Count - 1; i++)
+            {
+                var platform = currentPath[i];
+                platform.NextPlatform = currentPath[i + 1];
+                platform.PrevPlatform = currentPath[i - 1];
+            }
+
+            var railway = currentPath[0];
+            railway.NextPlatform = railway.PrevPlatform = currentPath[1];
+            var lastPlatform = currentPath[currentPath.Count - 1];
+            lastPlatform.NextPlatform = lastPlatform.PrevPlatform = currentPath[currentPath.Count - 2];
+
         }
 
         public Platform UseObject(Vector3 position, Quaternion quaternion, TypePlatformEnum typePlatform)
@@ -58,7 +79,29 @@ namespace TestProjectAppache
             var index = platformsListPrefabs.FindIndex(pl => pl.TypePlatform == typePlatform);
             return index != -1 ? platformsListPrefabs[index] : null;
         }
+
+        public Platform GetNextPlatform(Platform currentPlatform)
+        {
+            var index = currentPath.FindIndex(pl => pl == currentPlatform);
+            if (index != -1)
+            {
+                Platform nextPlatfrom = currentPath[index].NextPlatform;
+                return nextPlatfrom != null ? nextPlatfrom : GenerateNewPlatform();
+            }
+            else
+            {
+                return GenerateNewPlatform();
+            }
+        }
+
+        private Platform GenerateNewPlatform()
+        {
+            return new Platform();
+        }
+
     }
+
+
 
     [Serializable]
     public class StartPlaformPostion

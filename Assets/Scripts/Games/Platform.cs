@@ -7,6 +7,11 @@ namespace TestProjectAppache
     public class Platform : MonoBehaviour, IPoolObject
     {
         public TypePlatformEnum TypePlatform;
+        public Platform NextPlatform { get; set; }
+        public Platform PrevPlatform { get; set; }
+
+        public Transform PositionPlayer;
+
         public bool IsPooledObject { get; set; }
         public void Deactivate()
         {

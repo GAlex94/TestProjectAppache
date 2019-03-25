@@ -2,17 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+namespace TestProjectAppache
 {
-    // Start is called before the first frame update
-    void Start()
+    public class PlayerController : MonoBehaviour
     {
-        
-    }
+        private Platform currentPlatform;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public void Init(Platform startPlatform)
+        {
+            currentPlatform = startPlatform;
+            gameObject.transform.position = currentPlatform.PositionPlayer.position;
+        }
+
+      
+        private void MoveToPlatform()
+        {
+            currentPlatform = GameSpring.Instance.LevelGenerator.GetNextPlatform(currentPlatform);
+            gameObject.transform.position = currentPlatform.PositionPlayer.position;
+            gameObject.transform.SetParent(currentPlatform.gameObject.transform);
+        }
+
+        public void Stretch()
+        {
+            Debug.Log("Strech tap");
+            MoveToPlatform();
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace TestProjectAppache
 
         private void StretchPlayer()
         {
-            Debug.Log("Strech tap");
+            GameSpring.Instance.PlayerController.Stretch();
         }
     }
 }
