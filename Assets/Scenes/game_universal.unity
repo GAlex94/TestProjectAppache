@@ -849,11 +849,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScreenTopBar
       objectReference: {fileID: 0}
-    - target: {fileID: 4897456923904345284, guid: 1ea64cc427bf7e24c931a66722314616,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4897456923904345291, guid: 1ea64cc427bf7e24c931a66722314616,
         type: 3}
       propertyPath: m_LocalPosition.x

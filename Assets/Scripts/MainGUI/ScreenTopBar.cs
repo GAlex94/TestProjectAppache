@@ -9,7 +9,7 @@ namespace TestProjectAppache
     public class ScreenTopBar : GUIScreen
     {
         [SerializeField]
-        private TextMeshProUGUI moneyText;
+        private MoneyListener moneyText;
         
     }
 }
