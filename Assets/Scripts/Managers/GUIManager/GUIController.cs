@@ -70,12 +70,14 @@ namespace TestProjectAppache
 
             foreach (var curScreen in screens)
             {
-                //if (curScreen.gameObject.activeSelf && showedScreen == null)
-                //    showedScreen = curScreen;
-                //else
-                curScreen.gameObject.SetActive(false);
+                    curScreen.gameObject.SetActive(false);
             }
-            
+
+            foreach (var curScreen in currentScreens)
+            {
+                curScreen.Show();
+            }
+
             buttons.ForEach(x => x.onClick.AddListener(OnButtonClick));
         }
 

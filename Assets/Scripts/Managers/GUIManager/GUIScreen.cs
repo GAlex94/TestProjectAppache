@@ -128,6 +128,11 @@ namespace TestProjectAppache
                             LeanTween.alpha(rectTransform, 1, 0.2f);
                             break;
                         }
+                    case EffectType.None:
+                    {
+                        transform.localScale = Vector3.one;
+                        break;
+                    }
                 }
             }
             else

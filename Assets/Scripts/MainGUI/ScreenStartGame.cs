@@ -9,19 +9,20 @@ namespace TestProjectAppache
 {
     public class ScreenStartGame : GUIScreen
     {
-        [SerializeField]
-        private Button startGameButton;
+        [Header("Screen Elements")]
+        [SerializeField] private Button startGameButton;
 
 
         void Start()
         {
             startGameButton.onClick.RemoveAllListeners();
-            startGameButton.onClick.AddListener(StartGame());
+            startGameButton.onClick.AddListener(StartGame);
         }
 
-        private UnityAction StartGame()
+        private void StartGame()
         {
-            throw new System.NotImplementedException();
+            GUIController.Instance.ShowScreen<ScreenGame>();
+            Hide();
         }
     }
 }
