@@ -4,85 +4,82 @@ using System.Collections;
 using TMPro;
 using UnityEngine.UI;
 
-public class AnimatedScore : MonoBehaviour
+namespace TestProjectAppache
 {
-
-    public static float time = 0.2f;
-    float currentScore = 0;
-    float score = 0;
-
-    TextMeshProUGUI textComponent;
-
-    public float Score
+    public class AnimatedScore : MonoBehaviour
     {
-        get
+
+        public static float time = 0.2f;
+        float currentScore = 0;
+        float score = 0;
+
+        TextMeshProUGUI textComponent;
+
+        public float Score
         {
-            return score;
+            get { return score; }
+            set { score = value; }
         }
-        set
+
+        void Awake()
         {
-            score = value;
+            textComponent = this.GetComponent<TextMeshProUGUI>();
         }
-    }
 
-    void Awake()
-    {
-        textComponent = this.GetComponent<TextMeshProUGUI>();
-    }
-
-    void Start()
-    {
-        Setup((int)currentScore);
-    }
-
-    public void Init(int curScore)
-    {
-        Setup(curScore);
-        score = curScore;
-        currentScore = score;
-    }
-
-    void Update()
-    {
-        if (currentScore < score)
+        void Start()
         {
-            if (Math.Abs(Time.timeScale) < 0.01f)
-            {
-                currentScore = score;
-                Setup((int) currentScore);
-            }
-
-            currentScore += score / time * Time.deltaTime;
-            currentScore = Mathf.Clamp(currentScore, 0, score);
-
-            Setup((int) currentScore);
-        }
-        else if (currentScore > score)
-        {
-            if (Math.Abs(Time.timeScale) < 0.01f)
-            {
-                currentScore = score;
-                Setup((int) currentScore);
-            }
-
-            currentScore -= score / time * Time.deltaTime;
-            currentScore = Mathf.Max(currentScore, score);
-
             Setup((int) currentScore);
         }
 
-    }
-
-    void Setup(int n)
-    {
-        string s = string.Format("{0:## ### ###}", n);
-        if (n == 0)
+        public void Init(int curScore)
         {
-            s = "0";
+            Setup(curScore);
+            score = curScore;
+            currentScore = score;
         }
 
-        if (textComponent != null)
-            textComponent.text = s.Trim();
-    }
+        void Update()
+        {
+            if (currentScore < score)
+            {
+                if (Math.Abs(Time.timeScale) < 0.01f)
+                {
+                    currentScore = score;
+                    Setup((int) currentScore);
+                }
 
+                currentScore += score / time * Time.deltaTime;
+                currentScore = Mathf.Clamp(currentScore, 0, score);
+
+                Setup((int) currentScore);
+            }
+            else if (currentScore > score)
+            {
+                if (Math.Abs(Time.timeScale) < 0.01f)
+                {
+                    currentScore = score;
+                    Setup((int) currentScore);
+                }
+
+                currentScore -= score / time * Time.deltaTime;
+                currentScore = Mathf.Max(currentScore, score);
+
+                Setup((int) currentScore);
+            }
+
+        }
+
+        void Setup(int n)
+        {
+            string s = string.Format("{0:## ### ###}", n);
+            if (n == 0)
+            {
+                s = "0";
+            }
+
+            if (textComponent != null)
+                textComponent.text = s.Trim();
+        }
+
+    }
 }
