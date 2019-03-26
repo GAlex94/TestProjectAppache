@@ -173,14 +173,14 @@ namespace TestProjectAppache
 
         public void DestroyFromPool(GameObject currentObject)
         {
-            Debug.Log("DestroyObject from pool: " + currentObject.name);
+         //   Debug.Log("DestroyObject from pool: " + currentObject.name);
             int foundIndex = poolObjects.FindIndex(o => o.lifeObject == currentObject && o.isUsed);
             if (foundIndex != -1)
             {
                 poolObjects[foundIndex].poolObject.Deactivate();
                 poolObjects[foundIndex].lifeObject.SetActive(false);
                 poolObjects[foundIndex].isUsed = false;
-                Debug.Log("Destroy 'instantiate' pool object. Name=" + poolObjects[foundIndex].lifeObject.name);
+           //     Debug.Log("Destroy 'instantiate' pool object. Name=" + poolObjects[foundIndex].lifeObject.name);
             }
         }
 
@@ -201,7 +201,7 @@ namespace TestProjectAppache
                     prefab = prefab,
                     poolType = poolType
                 };
-                Debug.Log("New instantiate pool object. Name=" + newGameObject.name);
+          //      Debug.Log("New instantiate pool object. Name=" + newGameObject.name);
                 return newObj;
             }
 

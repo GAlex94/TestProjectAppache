@@ -1,21 +1,34 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace TestProjectAppache
 {
     public class LevelGenerator : MonoBehaviour
     {
+        [Header("Level")]
+        [SerializeField] private Level level;
+        [Header("Prefabs")]
         [SerializeField] private List<Platform> platformsListPrefabs;
+        [SerializeField] private GameObject backGroundPrefabs;
+        [Header("Current")]
         [SerializeField] private List<Platform> currentPath;
+        [SerializeField] private List<GameObject> currentBackGround;
+        [Header("Spawn Information")]
         [SerializeField] private Transform spawnContainer;
         [SerializeField] private Transform StartSpawnPosition;
+        private Vector3 spawnPosition;
         [SerializeField] private List<StartPlaformPostion> startPlaformList;
-        [SerializeField] private int globalPlatformIndex;
+         private int globalPlatformIndex;
+        [SerializeField] private float minOffsetPlatfrom;
+        [SerializeField] private float maxOffsetPlatform;
+        [SerializeField] private float offsetSpawnBack = 30f;
+      
         private ObjectsPool _pool;
 
-        
+
         public void Init(ObjectsPool pool)
         {
             _pool = pool;
@@ -25,23 +38,27 @@ namespace TestProjectAppache
             }
 
             GenerateFirstPlafrom();
+            level.Init(StartSpawnPosition);
 
             GameSpring.Instance.PlayerController.Init(currentPath[0]);
+            GameSpring.Instance.PlayerController.ChangePlaftorm += MoveLevel;
         }
 
         private void GenerateFirstPlafrom()
         {
             currentPath = new List<Platform>();
             globalPlatformIndex = 0;
+            spawnPosition = StartSpawnPosition.position;
             for (int i = 0; i < startPlaformList.Count; i++)
             {
                 var selectType = startPlaformList[i].TypePlatform;
-                var createdRailway = UseObject(StartSpawnPosition.position + startPlaformList[i].OffsetPositon, Quaternion.identity, selectType);
-                StartSpawnPosition.position += startPlaformList[i].OffsetPositon;
-                currentPath.Add(createdRailway);
-                createdRailway.gameObject.transform.SetParent(spawnContainer);
+                var platform = UseObject(spawnPosition + startPlaformList[i].OffsetPositon, Quaternion.identity,
+                    selectType);
+                spawnPosition += startPlaformList[i].OffsetPositon;
+                currentPath.Add(platform);
+                platform.gameObject.transform.SetParent(spawnContainer);
                 globalPlatformIndex++;
-                createdRailway.gameObject.name = "PlatformType_"+ selectType + "_" + i;
+                platform.gameObject.name = "PlatformType_" + selectType + "_" + i;
             }
 
             LinkPathInGlobalPlatform();
@@ -65,13 +82,26 @@ namespace TestProjectAppache
 
         public Platform UseObject(Vector3 position, Quaternion quaternion, TypePlatformEnum typePlatform)
         {
-            var spawnedTile = _pool.InstantiateFromPool(GetObject(typePlatform).gameObject, position, quaternion, PoolType.Tile);
+            var spawnedTile =
+                _pool.InstantiateFromPool(GetObject(typePlatform).gameObject, position, quaternion, PoolType.Tile);
             if (!spawnedTile.activeSelf)
             {
                 spawnedTile.SetActive(true);
             }
 
             return spawnedTile.GetComponent<Platform>();
+        }
+
+         public GameObject UseObject(Vector3 position, Quaternion quaternion)
+        {
+            var spawnedTile =
+                _pool.InstantiateFromPool(backGroundPrefabs, position, quaternion, PoolType.Tile);
+            if (!spawnedTile.activeSelf)
+            {
+                spawnedTile.SetActive(true);
+            }
+
+            return spawnedTile;
         }
 
         private Platform GetObject(TypePlatformEnum typePlatform)
@@ -94,11 +124,66 @@ namespace TestProjectAppache
             }
         }
 
+        private void CreateNewPlatform()
+        {
+            HideFirstPlatform();
+            var lastPlatform = currentPath[currentPath.Count - 1];
+            var selectTypePlatform = globalPlatformIndex % 3 != 0 ? TypePlatformEnum.Default : TypePlatformEnum.Default;
+            var offset = UnityEngine.Random.Range(minOffsetPlatfrom, maxOffsetPlatform);
+            spawnPosition = lastPlatform.transform.position + Vector3.right * offset;
+            var platform = UseObject(spawnPosition, Quaternion.identity, selectTypePlatform);
+            currentPath.Add(platform);
+            platform.gameObject.transform.SetParent(spawnContainer);
+            globalPlatformIndex++;
+            platform.gameObject.name = "PlatformType_" + selectTypePlatform + "_" + globalPlatformIndex;
+
+            lastPlatform.NextPlatform = platform;
+            platform.PrevPlatform = lastPlatform;
+            platform.NextPlatform = null;
+            globalPlatformIndex++;
+        }
+
+        public void HideFirstPlatform()
+        {
+            if (currentPath.Count < 5)
+            {
+                return;
+            }
+            var destroyObj = currentPath[0].gameObject;
+            currentPath.RemoveAt(0);
+            _pool.DestroyFromPool(destroyObj);
+        }
+
         private Platform GenerateNewPlatform()
         {
             return new Platform();
         }
 
+        public void MoveLevel(Platform currentPlatform)
+        {
+            level.Move(currentPlatform.gameObject.transform);
+            CreateNewPlatform();
+        }
+
+        public void GenerateNewBack()
+        {
+            HideFirstBack();
+            var spawnPositionBack = currentBackGround.Last().transform.position + Vector3.right * offsetSpawnBack;
+            var newBack = UseObject(spawnPositionBack, Quaternion.identity);
+            newBack.transform.SetParent(level.gameObject.transform);
+            currentBackGround.Add(newBack);        
+        }
+
+        public void HideFirstBack()
+        {
+            if (currentBackGround.Count < 3)
+            {
+                return;
+            }
+            var destroyObj = currentBackGround[0].gameObject;
+            currentBackGround.RemoveAt(0);
+            _pool.DestroyFromPool(destroyObj);
+        }
     }
 
 
