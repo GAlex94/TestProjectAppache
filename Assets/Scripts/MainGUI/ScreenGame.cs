@@ -9,18 +9,22 @@ namespace TestProjectAppache
     public class ScreenGame : GUIScreen
     {
         [Header("Screen Elements")]
-        [SerializeField] private Button StretchPlayerButton;
+        [SerializeField] private ButtonStretch StretchPlayerButton;
 
 
         void Start()
         {
-            StretchPlayerButton.onClick.RemoveAllListeners();
-            StretchPlayerButton.onClick.AddListener(StretchPlayer);
+            StretchPlayerButton.Init(StretchPlayer, MovePlayer);
         }
 
         private void StretchPlayer()
         {
             GameSpring.Instance.PlayerController.Stretch();
+        }
+
+        private void MovePlayer()
+        {
+            GameSpring.Instance.PlayerController.MoveToPlatform();
         }
     }
 }

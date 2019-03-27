@@ -17,9 +17,10 @@ namespace TestProjectAppache
             gameObject.transform.SetParent(currentPlatform.gameObject.transform);
         }
 
-      
-        private void MoveToPlatform()
+
+        public void MoveToPlatform()
         {
+            Debug.Log("Move to next platform");
             currentPlatform = GameSpring.Instance.LevelGenerator.GetNextPlatform(currentPlatform);
             gameObject.transform.position = currentPlatform.PositionPlayer.position;
             gameObject.transform.SetParent(currentPlatform.PositionPlayer);
@@ -30,8 +31,8 @@ namespace TestProjectAppache
 
         public void Stretch()
         {
-            Debug.Log("Strech tap");
-            MoveToPlatform();
+            Debug.Log("Strech press");
+           // MoveToPlatform();
         }
     }
 }
