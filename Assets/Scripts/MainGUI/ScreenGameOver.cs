@@ -14,7 +14,7 @@ namespace TestProjectAppache
         void Start()
         {
             RestartButton.onClick.RemoveAllListeners();
-            RestartButton.onClick.AddListener(() => GameManager.Instance.Restart());
+            RestartButton.onClick.AddListener(() => GUIController.Instance.ShowScreen<ScreenLoading>(true));
         }
 
         private void OnEnable()
