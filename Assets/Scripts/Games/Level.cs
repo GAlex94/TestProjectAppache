@@ -10,16 +10,16 @@ namespace TestProjectAppache
         [SerializeField] private float speedMove;
 
         private Vector3 targetPosition;
-        private Vector3 firstPostion;
+        private Vector3 positionBackGround;
         private bool isInit;
 
         public void Init(Transform positionStart)
         {
             targetPosition = positionStart.position;
+            positionBackGround = Vector3.right * 5;
             isInit = true;
         }
-
-        [ContextMenu("Move")]
+     
         public void Move(Transform currentPlatform)
         {
             if (!isInit || currentPlatform == null)
@@ -28,12 +28,10 @@ namespace TestProjectAppache
             var offset = gameObject.transform.position.x - Math.Abs(targetPosition.x - currentPlatform.position.x);
             transform.LeanMoveX(offset, speedMove);
 
-            firstPostion.x -= offset;
-            Debug.LogError("offset" + offset);
-            if (Math.Abs(firstPostion.x + offset) > 5)
+            if (positionBackGround.x - Math.Abs(gameObject.transform.position.x) < 5)
             {
-                Debug.Log("Need generate Back");
-                firstPostion.x = gameObject.transform.position.x;
+              //  Debug.Log("Need generate Back");
+                positionBackGround.x += 30;
                 GameSpring.Instance.LevelGenerator.GenerateNewBack();
             }
         }

@@ -28,6 +28,7 @@ namespace TestProjectAppache
         {
             yield return new WaitForEndOfFrame();
             DataManager.Instance.AddMoneyListener(this);
+            OnMoneyChange(DataManager.Instance.Money,0);
         }
 
         public void OnMoneyChange(int newMoney, int oldMoney)

@@ -166,21 +166,26 @@ namespace TestProjectAppache
                 newPoolObject.lifeObject.transform.position = position;
                 newPoolObject.lifeObject.transform.rotation = rotation;
                 newPoolObject.poolObject.Activate(newPoolObject.prefab);
-                Debug.Log("Exist 'instantiate' pool object. Name=" + newPoolObject.lifeObject.name);
+              //  Debug.Log("Exist 'instantiate' pool object. Name=" + newPoolObject.lifeObject.name);
                 return newPoolObject.lifeObject;
             }
         }
 
         public void DestroyFromPool(GameObject currentObject)
         {
-         //   Debug.Log("DestroyObject from pool: " + currentObject.name);
+           //  Debug.Log("DestroyObject from pool: " + currentObject.name);
             int foundIndex = poolObjects.FindIndex(o => o.lifeObject == currentObject && o.isUsed);
             if (foundIndex != -1)
             {
                 poolObjects[foundIndex].poolObject.Deactivate();
                 poolObjects[foundIndex].lifeObject.SetActive(false);
                 poolObjects[foundIndex].isUsed = false;
-           //     Debug.Log("Destroy 'instantiate' pool object. Name=" + poolObjects[foundIndex].lifeObject.name);
+             //   Debug.Log("Destroy 'instantiate' pool object. Name=" + poolObjects[foundIndex].lifeObject.name);
+            }
+            else
+            {
+       //         Debug.Log("DestroyObject from pool: " + currentObject.name);
+                Destroy(currentObject);
             }
         }
 

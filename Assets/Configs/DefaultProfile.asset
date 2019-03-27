@@ -14,17 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   profileData:
     Version: 2.0
-    MusicValue: 1
     SoundValue: 1
     PlayerData:
-      Money: 10000
-      Experience: 0
-    SlotsData:
-      lastSpinId: 0
-      periodData:
-        leftSpinCount: 0
-        minRTP: 0
-        maxRTP: 0
-        lastPeriodMinRTP: 0
-        playerBankOnStart: 0
-        finished: 1
+      Money: 0
+      Name: NoName

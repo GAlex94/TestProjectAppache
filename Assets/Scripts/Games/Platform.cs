@@ -7,6 +7,7 @@ namespace TestProjectAppache
     public class Platform : MonoBehaviour, IPoolObject
     {
         public TypePlatformEnum TypePlatform;
+        public int Reward = 1;
         public Platform NextPlatform { get; set; }
         public Platform PrevPlatform { get; set; }
 

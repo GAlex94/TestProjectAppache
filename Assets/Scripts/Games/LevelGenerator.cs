@@ -21,7 +21,8 @@ namespace TestProjectAppache
         [SerializeField] private Transform StartSpawnPosition;
         private Vector3 spawnPosition;
         [SerializeField] private List<StartPlaformPostion> startPlaformList;
-         private int globalPlatformIndex;
+        [SerializeField] private int countStartSecondPlatform;
+        private int globalPlatformIndex;
         [SerializeField] private float minOffsetPlatfrom;
         [SerializeField] private float maxOffsetPlatform;
         [SerializeField] private float offsetSpawnBack = 30f;
@@ -32,10 +33,13 @@ namespace TestProjectAppache
         public void Init(ObjectsPool pool)
         {
             _pool = pool;
-            foreach (var obj in platformsListPrefabs)
+   /*         foreach (var obj in platformsListPrefabs)
             {
                 _pool.AddObjectToPoolByType(obj.gameObject, PoolType.Tile);
             }
+
+            _pool.AddObjectToPoolByType(backGroundPrefabs, PoolType.Tile);
+     */     
 
             GenerateFirstPlafrom();
             level.Init(StartSpawnPosition);
@@ -59,6 +63,11 @@ namespace TestProjectAppache
                 platform.gameObject.transform.SetParent(spawnContainer);
                 globalPlatformIndex++;
                 platform.gameObject.name = "PlatformType_" + selectType + "_" + i;
+            }
+
+            for (int i = 0; i < countStartSecondPlatform; i++)
+            {
+                CreateNewPlatform();
             }
 
             LinkPathInGlobalPlatform();
@@ -116,11 +125,19 @@ namespace TestProjectAppache
             if (index != -1)
             {
                 Platform nextPlatfrom = currentPath[index].NextPlatform;
-                return nextPlatfrom != null ? nextPlatfrom : GenerateNewPlatform();
+                if (nextPlatfrom != null)
+                {
+                    return nextPlatfrom;
+                }else
+                {
+                    CreateNewPlatform();
+                    return currentPath.Last();
+                }          
             }
             else
             {
-                return GenerateNewPlatform();
+                CreateNewPlatform();
+                return currentPath.Last();
             }
         }
 
@@ -128,7 +145,7 @@ namespace TestProjectAppache
         {
             HideFirstPlatform();
             var lastPlatform = currentPath[currentPath.Count - 1];
-            var selectTypePlatform = globalPlatformIndex % 3 != 0 ? TypePlatformEnum.Default : TypePlatformEnum.Default;
+            var selectTypePlatform = globalPlatformIndex % 5 != 0 ? TypePlatformEnum.Default : (UnityEngine.Random.Range(0,100) > 50 ? TypePlatformEnum.VerticalMove : TypePlatformEnum.Horizontal);
             var offset = UnityEngine.Random.Range(minOffsetPlatfrom, maxOffsetPlatform);
             spawnPosition = lastPlatform.transform.position + Vector3.right * offset;
             var platform = UseObject(spawnPosition, Quaternion.identity, selectTypePlatform);
@@ -145,7 +162,7 @@ namespace TestProjectAppache
 
         public void HideFirstPlatform()
         {
-            if (currentPath.Count < 5)
+            if (currentPath.Count < 10)
             {
                 return;
             }
@@ -154,10 +171,7 @@ namespace TestProjectAppache
             _pool.DestroyFromPool(destroyObj);
         }
 
-        private Platform GenerateNewPlatform()
-        {
-            return new Platform();
-        }
+ 
 
         public void MoveLevel(Platform currentPlatform)
         {
@@ -165,6 +179,7 @@ namespace TestProjectAppache
             CreateNewPlatform();
         }
 
+        [ContextMenu("GenerateNewBack")]
         public void GenerateNewBack()
         {
             HideFirstBack();
@@ -176,7 +191,7 @@ namespace TestProjectAppache
 
         public void HideFirstBack()
         {
-            if (currentBackGround.Count < 3)
+            if (currentBackGround.Count < 2)
             {
                 return;
             }

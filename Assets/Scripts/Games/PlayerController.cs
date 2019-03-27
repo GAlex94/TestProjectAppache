@@ -22,7 +22,8 @@ namespace TestProjectAppache
         {
             currentPlatform = GameSpring.Instance.LevelGenerator.GetNextPlatform(currentPlatform);
             gameObject.transform.position = currentPlatform.PositionPlayer.position;
-            gameObject.transform.SetParent(currentPlatform.gameObject.transform);
+            gameObject.transform.SetParent(currentPlatform.PositionPlayer);
+            GameSpring.Instance.AddScore(currentPlatform.Reward);
 
             if (ChangePlaftorm != null) ChangePlaftorm(currentPlatform);
         }

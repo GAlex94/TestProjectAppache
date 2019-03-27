@@ -93,5 +93,13 @@ namespace TestProjectAppache
             Debug.Log("Start load menu");
             SceneManager.LoadScene("loading");
         }
+
+        public void Restart()
+        {
+            Debug.Log("Start load game_universal");
+            SceneManager.LoadScene("game_universal", LoadSceneMode.Single);
+
+            StartCoroutine(DefferActivateGameOnSceneGame());
+        }
     }
 }

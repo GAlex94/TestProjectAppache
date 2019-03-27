@@ -110,7 +110,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 6102716155058197198}
   m_OnClick:
     m_PersistentCalls:
@@ -335,6 +335,7 @@ MonoBehaviour:
   appearEffect: 2
   fadeEffect: 2
   moneyText: {fileID: 4626364118313566464}
+  scoreText: {fileID: 905513253128979928}
 --- !u!1 &5653521763169133007
 GameObject:
   m_ObjectHideFlags: 0
