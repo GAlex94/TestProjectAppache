@@ -614,7 +614,7 @@ PrefabInstance:
     - target: {fileID: 2130325204820264814, guid: 4168ea62f3f84594aaf9379ff7cdce69,
         type: 3}
       propertyPath: speedLerp
-      value: 1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 2130325204820264814, guid: 4168ea62f3f84594aaf9379ff7cdce69,
         type: 3}
@@ -634,7 +634,7 @@ PrefabInstance:
     - target: {fileID: 6013644093205136495, guid: 4168ea62f3f84594aaf9379ff7cdce69,
         type: 3}
       propertyPath: m_Positions.Array.size
-      value: 10
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6013644093205136495, guid: 4168ea62f3f84594aaf9379ff7cdce69,
         type: 3}
@@ -5713,13 +5713,11 @@ MonoBehaviour:
   speed: 1
   speedMoveLine: 1
   speedLerp: 1
-  isCircle: 0
-  alpha: 0
-  radius: 0
-  maxPost: 0
-  Teas: 0.5
+  defaultSpeedLerp: 1
+  isStretch: 0
   center: {x: 0, y: 0, z: 0}
   startPos: {x: 0, y: 0, z: 0}
+  endPos: {x: 0, y: 0, z: 0}
   Radius: 0
   step0: 0
   step1: 0

@@ -22,6 +22,7 @@ namespace TestProjectAppache
         private void StartGame()
         {
             GUIController.Instance.ShowScreen<ScreenGame>();
+            GameSpring.Instance.PlayerController.CanStretch();
             Hide();
         }
     }
