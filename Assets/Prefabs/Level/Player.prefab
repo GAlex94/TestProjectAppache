@@ -270,7 +270,7 @@ LineRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 1, z: 0}
@@ -292,9 +292,39 @@ LineRenderer:
   - {x: 0, y: 1, z: 0}
   - {x: 0, y: 1, z: 0}
   - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: 1, z: 0}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 0.5
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -391,9 +421,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0219e042ae3cbb84798b78ca43a10c6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSkin: {fileID: 1570367272858359877}
   skinLineRenderer: {fileID: 6013644093205136495}
+  AddCountHight: 0.05
+  KoefHight: 1
   HightPlayer: 0
-  AddCountHight: 0.01
-  KoefHight: 0.004
+  isStretch: 0
   OffesetMove: 1
+  speed: 1
+  speedMoveLine: 2
+  speedLerp: 0.2
+  defaultSpeedLerp: 1
+  koef: 1.2

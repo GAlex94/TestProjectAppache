@@ -15,7 +15,7 @@ namespace TestProjectAppache
 
         private void OnEnable()
         {
-            platform.localPosition = Vector3.zero;
+         //   platform.localPosition = Vector3.zero;
 
             switch (TypePlatform)
             {
@@ -39,7 +39,7 @@ namespace TestProjectAppache
             {
                 if (Mathf.Abs(platform.localPosition.x - directionMove.x) > 0.01)
                 {
-                    platform.localPosition= new Vector3(Mathf.Lerp(platform.localPosition.x, directionMove.x, speedMove * Time.deltaTime), 0, 0);
+                    platform.localPosition= new Vector3(Mathf.Lerp(platform.localPosition.x, directionMove.x, speedMove * Time.deltaTime), platform.localPosition.y, platform.localPosition.z);
                 }
                 else
                 {
@@ -51,7 +51,7 @@ namespace TestProjectAppache
             {
                 if (Mathf.Abs(platform.localPosition.y - directionMove.y) > 0.01)
                 {
-                    platform.localPosition = new Vector3(0, Mathf.Lerp(platform.localPosition.y, directionMove.y, speedMove * Time.deltaTime), 0);
+                    platform.localPosition = new Vector3(platform.localPosition.x, Mathf.Lerp(platform.localPosition.y, directionMove.y, speedMove * Time.deltaTime), platform.localPosition.z);
                 }
                 else
                 {
